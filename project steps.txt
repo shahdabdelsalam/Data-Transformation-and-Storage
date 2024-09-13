@@ -1,0 +1,40 @@
+1.Create Database 
+create the structure of all the tables required
+
+we need these transformations to be done in the Data flow from the flat file sources to transfer the data and save it into the DB
+make sure the data types from flatfiles in the connection string are compatible with data types in the DB
+the IMEI must be 14 characters and the IMSI must be 9 chareacters
+make sure to set up the correct data type for each column in the connection string advanced settings
+if the data type is incorerrect or any error in field in the source , redirect the rows to err_source_output table
+
+id → int (DT_i4)
+
+IMSI len(9),IMEI len (14) → string (DT_STR)
+
+CELL,LAC → int 
+
+event_type len(1) → string
+
+event_ts → date 
+
+2.if the IMSI or Cell or LAC or EVENT_TS fields are null then redirect these rejected rows 
+into err_destination_output table 
+
+3.use the IMSI to search the IMSI refrence table to retrieve the subscriber ID, 
+if there was no subscriber ID to match then subscriber_id value will be -99999
+
+4.first , save the IMEI into the DB as it is and get the first 8 characters from the IMEI and save it in column named TAC
+
+5.get the last 6 characters from the IMEI and save it in column named SNR,
+if the IMEI is null or its size is less than 14 then the value of TAC and SNR will be both -99999
+
+6.after moving the data, move the processed files into processed folder 
+
+
+
+
+
+
+
+
+
